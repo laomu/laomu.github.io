@@ -10,8 +10,8 @@
 # 技术栈类
 
 1. Java生态圈
-    1. [`Dubbo` 快速入门](https://laomu.github.io/大牧絮叨系列-Dubbo/Dubbo Tutorial)
-    2. [`Zookeeper` 快速入门](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper Tutorial)
+    1. [`Dubbo` 快速入门](https://laomu.github.io/大牧絮叨系列-Dubbo/Dubbo%20Tutorial)
+    2. [`Zookeeper` 快速入门](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper%20Tutorial)
 2. Python生态圈
 3. Go生态圈
 4. 数据结构相关
