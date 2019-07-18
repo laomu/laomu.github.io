@@ -10,8 +10,9 @@
 # 技术栈类
 
 1. Java生态圈
-    1. [`Dubbo` 快速入门](https://laomu.github.io/大牧絮叨系列-Dubbo/Dubbo%20Tutorial)
-    2. [`Zookeeper` 快速入门](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper%20Tutorial)
+    1. [`Zookeeper`指北针](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper%20Tutorial)
+    2. [`Dubbo` 指北针](https://laomu.github.io/大牧絮叨系列-Dubbo/Dubbo%20Tutorial)
+    3. More….
 2. Python生态圈
 3. Go生态圈
 4. 数据结构相关
@@ -30,5 +31,6 @@
 |时间|版本|摘要|
 |--|--|--|
 |2019-07-16|V-0.0.1|创建Github个人小栈，开始构建一个个人知识库，初始化本地&远程仓库|
-|2019-07-16|V0.1.0|添加设计模式(工厂模式相关)|
-|2019-07-18|V0.2.0|抽象工厂模式，单例模式|
+|2019-07-16|V-0.1.0|添加设计模式(工厂模式相关)|
+|2019-07-18|V-0.2.0|抽象工厂模式，单例模式|
+|2019-07-19|V-1.0.0|`Zookeeper指北针`、`Dubbo指北针`部分内容整理|

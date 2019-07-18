@@ -135,7 +135,7 @@
 
 `Dubbo`官方支持多种注册中心服务组件，如`Multicast`、`Zookeeper`、`Nacos`、`Redis`以及自身提供的`Simple`注册中心，但是官方推荐使用`Zookeeper`作为自身的注册中心。
 
-`Zookeeper`的使用方式请参考 [大牧絮叨系列-Zookeeper](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper Tutorial)
+`Zookeeper`的使用方式请参考 [大牧絮叨系列-Zookeeper](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper%20Tutorial)
 
 ### （4） 监控中心
 
@@ -910,7 +910,7 @@ public class ConsumerService {
 
 `Dubbo`的注册中心的技术选型有很多种，官方推荐使用`Zookeeper`作为其注册中心使用。
 
-关于`Zookeeper`的基本使用方式，请移步 [大牧絮叨系列-Zookeeper](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper Tutorial)
+关于`Zookeeper`的基本使用方式，请移步 [大牧絮叨系列-Zookeeper](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper%20Tutorial)
 
 我们通过本机部署的`Zookeeper`进行测试，在后面的章节中再进行高可用拓展。
 
