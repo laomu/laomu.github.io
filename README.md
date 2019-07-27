@@ -10,8 +10,8 @@
 # 技术栈类
 
 1. Java生态圈
-    1. [`Zookeeper`指北针](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper%20Tutorial)
-    2. [`Dubbo` 指北针](https://laomu.github.io/大牧絮叨系列-Dubbo/Dubbo%20Tutorial)
+    1. [`Zookeeper`入门到进阶](https://laomu.github.io/大牧絮叨系列-Zookeeper/Zookeeper%20Tutorial)
+    2. [`Dubbo` 入门到进阶](https://laomu.github.io/大牧絮叨系列-Dubbo/Dubbo%20Tutorial)
     3. More….
 2. Python生态圈
 3. Go生态圈
@@ -24,6 +24,8 @@
 - （4） [工厂方法模式](https://laomu.github.io/设计模式/4、工厂方法模式%5B创造%5D)
 - （5） [抽象工厂模式](https://laomu.github.io/设计模式/5、抽象工厂模式%5B创造%5D)
 - （6） [单例模式](https://laomu.github.io/设计模式/6、单例模式%5B创造%5D)
+- （7） 建造者模式
+- （8） 原型模式
 
 6. 其他更多...
 
@@ -34,3 +36,4 @@
 |2019-07-16|V-0.1.0|添加设计模式(工厂模式相关)|
 |2019-07-18|V-0.2.0|抽象工厂模式，单例模式|
 |2019-07-19|V-1.0.0|`Zookeeper指北针`、`Dubbo指北针`部分内容整理|
+|2019-07-22|V-1.2.0|完善单例模式，添加建造者模式、原型模式|

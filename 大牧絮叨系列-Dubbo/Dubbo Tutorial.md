@@ -272,7 +272,7 @@ import lombok.experimental.Accessors;
 /**
  * <p>项目文档： 部门数据</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 @Data
@@ -299,7 +299,7 @@ import java.util.Date;
 /**
  * <p>项目文档： 职员数据</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 @Data
@@ -335,7 +335,7 @@ import java.util.List;
 /**
  * <p>项目文档： 通用服务受理接口</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 public interface IService<T> {
@@ -384,7 +384,7 @@ import com.damu.entity.Department;
 /**
  * <p>项目文档： 部门业务受理接口</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 public interface DepartmentService extends IService<Department>{
@@ -400,7 +400,7 @@ import com.damu.entity.Employee;
 /**
  * <p>项目文档： 职员类型业务接口</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 public interface EmployeeService extends IService<Employee>{
@@ -514,7 +514,7 @@ import java.util.List;
 /**
  * <p>项目文档： 部门关系映射</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 @Repository
@@ -567,7 +567,7 @@ import java.util.List;
 /**
  * <p>项目文档： 职员关系映射</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 public interface EmployeeMapper {
@@ -613,7 +613,7 @@ public interface EmployeeMapper {
 -   `resources/mapper/DeptMapper.xml`
 -   `resources/mapper/EmpMapper.xml`
 
-```java
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--命名空间应该是对应接口的包名+接口名 -->
@@ -647,7 +647,7 @@ public interface EmployeeMapper {
 </mapper>
 ```
 
-```java
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <!--命名空间应该是对应接口的包名+接口名 -->
@@ -875,7 +875,7 @@ import java.util.List;
 /**
  * <p>项目文档： 消费端业务受理类</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 @Service
@@ -1107,7 +1107,7 @@ import java.util.List;
 /**
  * <p>项目文档： 消费端业务受理类</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 @Service
@@ -1140,7 +1140,7 @@ import java.util.List;
 /**
  * <p>项目文档： 消费端测试程序</p>
  *
- * @author 大牧
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
  * @version V1.0
  */
 public class ConsumerApp {
@@ -1180,13 +1180,954 @@ Department(deptNo=80, deptName=刑罚部, location=梁山本部)
 
 ## 6、基于注解整合 `Spring Boot`
 
+`Spring`已经称为了市场上应用软件开发的主流应用，从`Spring Boot`出现之后在`约定优于配置`的路途上发展更进一步，我们针对`Spring Boot`以及`Dubbo`的整合，基础技术栈及版本选型如下：
+
+| 技术          | 版本   | 描述             |
+| ------------- | ------ | ---------------- |
+| jdk           | 1.8+   | 底层基础环境     |
+| mysql         | 8.0+   | 数据存储         |
+| druid         | 1.1.18 | 阿里数据库连接池 |
+| mybatis       | 3.4.+  | `ORM`实现        |
+| spring        | 5+     | 底层容器环境     |
+| spring boot   | 2.1+   | 项目构建框架     |
+| dubbo         | 2.7+   | Apache dubbo     |
+| intellij idea | 2019   | 开发工具         |
+
+### （1）`Spring Boot`项目：提供者
+
+创建基于`Spring Boot`的服务提供者模块`maven`项目`dubbo2019boot-provider-8002`，这里的提供者表示平台项目中提供某个自身服务的一个模块。
+
+#### a. 项目依赖管理
+
+修改`pom.xml`完善项目的依赖关系
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dubbo2019</artifactId>
+        <groupId>dubbo2019</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dubbo2019boot-provider-8002</artifactId>
+
+    <dependencies>
+        <!-- 基础依赖 -->
+        <dependency>
+            <groupId>dubbo2019</groupId>
+            <artifactId>dubbo2019-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- ORM -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+        </dependency>
+
+        <!-- Spring Boot2 web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.1.6.RELEASE</version>
+        </dependency>
+
+        <!-- Dubbo -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <!-- Dubbo zookeeper -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+    </dependencies>
+</project>
+```
+
+编辑基本的配置文件`resources/appliation.yml`
+
+```yml
+server:
+  port: 8002
+
+spring:
+  application:
+    name: dubbo2019boot-provider-8002
+
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/dubbo2019?useSSL=false&useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: Root2019
+      driver-class-name: com.mysql.cj.jdbc.Driver
+dubbo:
+  registry:
+    address: 127.0.0.1:2181
+    protocol: zookeeper
+  protocol:
+    name: dubbo
+    port: 20880
+  application:
+    name: dubbo2019boot-provider-8002
+    id: dubbo2019boot-provider-8002
+```
+
+但是这一步并没有结束，因为即使是基于`maven`构建的项目，在版本处理过程中依然可能存在依赖版本冲突的问题，上述依赖导入完成后，启动`Spring Boot`项目，大概率出现如下错误信息：
+
+```log
+java.lang.NoClassDefFoundError: org/springframework/beans/factory/config/YamlProcessor$StrictMapAppenderConstructor
+	at org.springframework.boot.env.YamlPropertySourceLoader$Processor.createYaml(YamlPropertySourceLoader.java:86)
+	at org.springframework.beans.factory.config.YamlProcessor.process(YamlProcessor.java:132)
+	at org.springframework.boot.env.YamlPropertySourceLoader$Processor.process(YamlPropertySourceLoader.java:101)
+	at org.springframework.boot.env.YamlPropertySourceLoader.load(YamlPropertySourceLoader.java:58)
+<a href="https://github.com/laomu/laomu.github.io">大牧</a>
+```
+
+或者出现如下 问题：
+
+```log
+Exception in thread "main" java.lang.AbstractMethodError: org.springframework.boot.context.config.ConfigFileApplicationListener.supportsSourceType(Ljava/lang/Class;)Z
+	at org.springframework.context.event.GenericApplicationListenerAdapter.supportsSourceType(GenericApplicationListenerAdapter.java:79)
+	at org.springframework.context.event.AbstractApplicationEventMulticaster.supportsEvent(AbstractApplicationEventMulticaster.java:289)
+	at org.springframework.context.event.AbstractApplicationEventMulticaster.retrieveApplicationListeners(AbstractApplicationEventMulticaster.java:221)
+	at org.springframework.context.event.AbstractApplicationEventMulticaster.getApplicationListeners(AbstractApplicationEventMulticaster.java:192)
+	at
+<a href="https://github.com/laomu/laomu.github.io">大牧</a>
+```
+
+#### b. 版本冲突问题
+
+对于上述`maven`项目运行时出现的问题，我们明显已经引入了`Spring`相关依赖，或者我们已经对常规配置进行了处理，为什么会出现这样意料之外的错误呢？答案就是：依赖冲突。
+
+打开当前项目的`pom.xml`配置文件，点击鼠标右键，选择`Diagrame--> show diagrames popul`查看版本依赖的关系图，从关系图中找到红色线条标注的冲突包，将冲突包从依赖中隔离即可，如图：
+
+<img src="assets/image-20190720005627363.png" style="width: 800px;">
+
+截图中我们只是标准了依赖图解的一部分，红色线条基本都将冲突指向了`dubbo`依赖，我们需要修改依赖关系将冲突的包进行排除处理，编辑修改`pom.xml`内容如下：
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dubbo2019</artifactId>
+        <groupId>dubbo2019</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <!-- <a href="https://github.com/laomu/laomu.github.io">大牧</a> -->
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dubbo2019boot-provider-8002</artifactId>
+
+    <dependencies>
+        <!-- 基础依赖 -->
+        <dependency>
+            <groupId>dubbo2019</groupId>
+            <artifactId>dubbo2019-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- ORM -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.18</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-autoconfigure</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Spring Boot2 web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.1.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.26</version>
+        </dependency>
+
+        <!-- Dubbo -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.7.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <!-- Dubbo zookeeper -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>4.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+此时在关联图解中再没有任何依赖冲突的红色线条出现了，项目的依赖管理就是完善的，后续如果要添加新的依赖的话，也需要针对新增加的依赖关系进行排查，而不是盲目的添加。
+
+#### c. `Bean`定义问题
+
+运行项目出现如下错误：
+
+```log
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The bean 'dubboConfigConfiguration.Single', defined in null, could not be registered. A bean with that name has already been defined in null and overriding is disabled.
+
+Action:
+
+Consider renaming one of the beans or enabling overriding by setting spring.main.allow-bean-definition-overriding=true
+
+<a href="https://github.com/laomu/laomu.github.io">大牧</a>
+```
+
+该错误信息描述指定的类型`dubboConfigConfiguration.Single`默认定义`null`不能进行注册，需要添加`Bean`定义配置，修改`application.yml`添加如下配置选项
+
+```yml
+spring:
+	main:
+    	allow-bean-definition-overriding: true
+```
+
+此时所有项目基础问题解决完成，开始业务逻辑部分代码的开发。
+
+#### d. 数据模型
+
+数据模型我们直接使用`dubbo2019-api`模块即可，使用前面开发好的基本定义模块。
+
+```xml
+<!-- 基础依赖 -->
+<dependency>
+    <groupId>dubbo2019</groupId>
+    <artifactId>dubbo2019-api</artifactId>
+    <version>1.0-SNAPSHOT</version>
+</dependency>
+```
+
+#### e. 数据访问
+
+数据访问`ORM`操作部分，我们通过注解的方式进行实现，定义基于`MyBatis`的数据访问接口如下：
+
+-   `com.damu.mapper.DepartmentMapper`
+-   `com.damu.mapper.EmployeeMapper`
+
+```java
+package com.damu.mapper;
+
+import com.damu.entity.Department;
+import org.apache.ibatis.annotations.*;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 部门ORM访问类</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+@Mapper
+public interface DepartmentMapper {
+
+    @Insert("insert into department(deptname, location)" +
+            "values(#{deptname}, #{location})")
+    Integer add(Department department);
+
+    @Delete("delete from department where deptno = #{deptno}")
+    Integer delete(String deptno);
+
+    @Update("update department set deptname = #{deptname}, " +
+            "location = #{location} where deptno = #{deptno}")
+    Integer update(Department department);
+
+    @Select("select * from department where deptno = #{deptno}")
+    Department findById(String deptno);
+
+    @Select("select * from department")
+    List<Department> findAll();
+}
+```
+
+```java
+package com.damu.mapper;
+
+import com.damu.entity.Department;
+import com.damu.entity.Employee;
+import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.Update;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 员工ORM访问类</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+public interface EmployeeMapper {
+
+    @Insert("insert into employee(empname, nickname, job, mgr, hirdate, salary, comm, deptno) values(#{empname}, #{nickname}, #{job}, #{mgr}, #{hirdate}, #{salary}, #{comm}, #{deptno})")
+    Integer add(Employee employee);
+
+    @Delete("delete from employee where empno = #{empno}")
+    Integer delete(String empno);
+
+    @Update("update employee set empname=#{empname}, nickname=#{nickname}, " +
+            "job = #{job}, mgr=#{mgr}, " +
+            "hirdate=#{hirdate}, salary=#{salary}, " +
+            "comm=#{comm}, deptno=#{deptno} " +
+            "where empno = #{empno}")
+    Integer update(Employee employee);
+
+    @Select("select * from employee where empno = #{empno}")
+    Employee findById(String empno);
+
+    @Select("select * from employee")
+    List<Employee> findAll();
+}
+
+```
+
+#### f. 服务处理
+
+服务处理类通过实现项目依赖的基本的`dubbo2019-api`接口模块进行操作，在`dubbo2019-api`中我们定义通用数据模型、数据接口等公共组件，其中的数据接口就是在这里做为`RPC`的基本单元进行操作的。
+
+-   `com.damu.service.DepartmentServiceImpl.java`
+-   `com.damu.service.EmployeeServiceImpl.java`
+
+```java
+package com.damu.service;
+
+import com.damu.entity.Department;
+import com.damu.mapper.DepartmentMapper;
+import org.apache.dubbo.config.annotation.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 部署业务受理类</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+@Component
+@Service
+public class DepartmentServiceImpl implements DepartmentService{
+
+    @Autowired
+    private DepartmentMapper departmentMapper;
+
+    @Override
+    public Integer add(Department department) {
+        return departmentMapper.add(department);
+    }
+
+    @Override
+    public Integer delete(String id) {
+        return departmentMapper.delete(id);
+    }
+
+    @Override
+    public Integer update(Department department) {
+        return departmentMapper.update(department);
+    }
+
+    @Override
+    public List<Department> getAll() {
+        return departmentMapper.findAll();
+    }
+
+    @Override
+    public Department getById(String id) {
+        return departmentMapper.findById(id);
+    }
+}
+
+```
+
+```java
+package com.damu.service;
+
+import com.damu.entity.Employee;
+import com.damu.mapper.EmployeeMapper;
+import org.apache.dubbo.config.annotation.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 职员业务处理类</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+@Component
+@Service
+public class EmployeeServiceImpl implements EmployeeService {
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
+    
+    @Override
+    public Integer add(Employee employee) {
+        return employeeMapper.add(employee);
+    }
+
+    @Override
+    public Integer delete(String id) {
+        return employeeMapper.delete(id);
+    }
+
+    @Override
+    public Integer update(Employee employee) {
+        return employeeMapper.update(employee);
+    }
+
+    @Override
+    public List<Employee> getAll() {
+        return employeeMapper.findAll();
+    }
+
+    @Override
+    public Employee getById(String id) {
+        return employeeMapper.findById(id);
+    }
+}
+```
+
+>   注意：上述业务处理类，我们通过`Spring`提供的`@Component`将其注册为了一个基本组件，然后使用了另一个`Apache Dubbo`提供的注解`@Service`将其发布成了一个服务，该类型中的所有方法都是暴露的服务接口。
+
+启动当前服务提供者应用，浏览器中打开前面我们构建过的监控中心`http://localhost:8081`从`zookeeper`中提取当前发布的服务信息，可以看到如下图所示在`dubbo2019boot-provider-8002`应用中发布了两个服务。
+
+![image-20190720103501951](assets/image-20190720103501951.png)
 
 
 
+### （2）`Spring Boot`项目：消费者
+
+创建`maven`项目`dubbo2019boot-consumer-9002`构建消费者应用，这里的`消费者`表示平台项目中需要依赖服务的一个模块，在某个业务处理过程中需要依赖/调用其他模块，协同完成完整功能处理过程。
+
+#### a. 项目依赖管理
+
+消费者子项目，就其本身而言也是服务端的一个自服务模块，所以对于第三方模块的依赖关系和生产者项目基本一致，`案例项目`中我们只是通过当前`消费者`项目调用使用远程的`生产者`项目服务，所以依赖关系中我们添加的数据访问`ORM`依赖暂时并不使用，`pom.xml`中依赖关系如下；
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>dubbo2019</artifactId>
+        <groupId>dubbo2019</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>dubbo2019boot-consumer-9002</artifactId>
+
+    <dependencies>
+        <!-- 基础依赖 -->
+        <dependency>
+            <groupId>dubbo2019</groupId>
+            <artifactId>dubbo2019-api</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!-- ORM -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>8.0.16</version>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
+            <version>1.1.18</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-autoconfigure</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>2.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!-- Spring Boot2 web -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+            <version>2.1.6.RELEASE</version>
+        </dependency>
+
+        <!-- Dubbo -->
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo</artifactId>
+            <version>2.7.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework</groupId>
+                    <artifactId>spring-context</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.dubbo</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>2.7.0</version>
+        </dependency>
+        <!-- Dubbo zookeeper -->
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-framework</artifactId>
+            <version>4.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.curator</groupId>
+            <artifactId>curator-recipes</artifactId>
+            <version>4.2.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.26</version>
+        </dependency>
+    </dependencies>
+</project>
+```
+
+`消费者`模块和`生产者`模块相似的是，都需要访问`zookeeper`注册中心，以获取对应的服务注册信息，所以配置信息和`提供者`类似，编辑`resources/application.yml`配置如下：
+
+```yml
+server:
+  port: 9002
+
+spring:
+  application:
+    name: dubbo2019boot-consumer-9002
+  main:
+    allow-bean-definition-overriding: true
+
+dubbo:
+  registry:
+    address: 127.0.0.1:2181
+    protocol: zookeeper
+  application:
+    name: dubbo2019boot-consumer-9002
+    id: dubbo2019boot-consumer-9002
+```
+
+
+
+#### b. 业务模型
+
+`消费者`项目中，我们直接定义自己的`service`业务受理模型，模拟一个模块在业务功能处理过程中对于其他模块的依赖过程。
+
+-   `com.damu.service.EmployeeSchedulerService.java`
+-   `com.damu.service.DepartmentSchedulerService.java`
+
+```java
+package com.damu.service;
+
+import com.damu.entity.Employee;
+import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 职员调度 业务处理类</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+@Service
+public class EmployeeSchedulerService {
+    
+    @Reference
+    private EmployeeService employeeService;
+
+    /**
+     * 获取所有职员数据
+     * @return 返回所有职员数据
+     */
+    public List<Employee> getAllEmployee() {
+        // RPC 远程调用 获取职员数据
+        return employeeService.getAll();
+    }
+}
+```
+
+```java
+package com.damu.service;
+
+import com.damu.entity.Department;
+import org.apache.dubbo.config.annotation.Reference;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 部门调度 业务处理类</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+public class DepartmentSchedulerService {
+    
+    @Reference
+    private DepartmentService departmentService;
+
+    /**
+     * 获取所有部门数据
+     * @return 所有部门数据
+     */
+    public List<Department> getAllDepartment() {
+        // RPC调用远程服务
+        return departmentService.getAll();
+    }
+}
+```
+
+>   注意：上述远程调用过程，主要用到了`Apache Dubbo`提供的`@Reference`注解将`xml`配置中的接口调用进行封装实现。
+
+#### c. 控制器接口
+
+`消费者`项目模块中的控制器，就是给其他业务调用者提供的一个业务接口，通过该控制器完成相关业务的处理过程，定义两个控制器处理类：
+
+-   `com.damu.controller.DepartmentSchedulerService.java`
+-   `com.damu.controller.EmployeeSchedulerService.java`
+
+```java
+package com.damu.controller;
+
+import com.damu.entity.Department;
+import com.damu.service.DepartmentSchedulerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 部门数据接口</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+@RestController
+@RequestMapping("/consumer/dept")
+public class DepartmentController {
+
+    @Autowired
+    private DepartmentSchedulerService departmentSchedulerService;
+
+    @GetMapping("/list")
+    public List<Department> getAllDepartment() {
+        return departmentSchedulerService.getAllDepartment();
+    }
+}
+
+```
+
+```java
+package com.damu.controller;
+
+import com.damu.entity.Employee;
+import com.damu.service.EmployeeSchedulerService;
+import org.apache.dubbo.config.annotation.Reference;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+/**
+ * <p>项目文档： 职员业务 数据接口</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+@RestController
+@RequestMapping("/consumer/emp")
+public class EmployeeController {
+
+    @Autowired
+    private EmployeeSchedulerService employeeSchedulerService;
+
+    /**
+     * 获取所有职员信息
+     * @return 返回职员数据
+     */
+    @GetMapping("/list")
+    public List<Employee> getAllEmployee() {
+        return employeeSchedulerService.getAllEmployee();
+    }
+
+    /**
+     * 获取单个职员数据
+     * @param id 职员编号
+     * @return 职员数据
+     */
+    @GetMapping("/{id}")
+    public Employee getEmployee(@PathVariable String id) {
+        return employeeSchedulerService.getEmployee(id);
+    }
+}
+```
+
+>   这里我们只是用到了查询操作，其他的增删改操作类似。
+
+#### d. 程序入口
+
+消费者项目模块的启动，就是一个普通的`SpringBoot`项目的启动模式
+
+```java
+package com.damu;
+
+import org.apache.dubbo.config.spring.context.annotation.EnableDubbo;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+/**
+ * <p>项目文档： 消费者程序入口</p>
+ *
+ * @author <a href="https://github.com/laomu/laomu.github.io">大牧</a>
+ * @version V1.0
+ */
+@EnableDubbo
+@SpringBootApplication
+public class ConsumerApp {
+
+    public static void main(String[] args) {
+        SpringApplication.run(ConsumerApp.class, args);
+    }
+
+}
+```
+
+
+
+### （3）  `RPC` 服务调用
+
+确认`zookeeper`注册中心已经启用
+
+启动提供依赖服务的`提供者`模块`dubbo2019boot-provider-8002`
+
+启动依赖服务完成业务受理的`消费者`模块`dubbo2019boot-consumer-9002`
+
+通过`消费者`访问数据结构的测试出现如下访问数据：
+
+```log
+[{"empNo":1,"empName":"宋江","nickname":"天魁星·及时雨","job":"头领","mgr":null,"hirdate":"2015-11-08T06:00:00.000+0000","salary":800,"comm":200000,"deptNo":1},{"empNo":2,"empName":"卢俊义","nickname":"天罡星·玉麒麟","job":"卢俊义","mgr":1,"hirdate":"2018-04-06T05:00:00.000+0000","salary":800,"comm":100000,"deptNo":1},{"empNo":3,"empName":"吴用","nickname":"天机星·智多星","job":"头领","mgr":1,"hirdate":"2012-08-10T05:00:00.000+0000","salary":800,"comm":100000,"deptNo":1},{"empNo":21,"empName":"关胜","nickname":"天勇星·大刀","job":"五虎上将","mgr":1,"hirdate":"2017-04-06T05:00:00.000+0000","salary":20000,"comm":2000,"deptNo":20},{"empNo":22,"empName":"林冲","nickname":"天雄星 豹子头","job":"五虎上将","mgr":1,"hirdate":"2018-04-06T05:00:00.000+0000","salary":21000,"comm":1800,"deptNo":20},{"empNo":23,"empName":"秦明","nickname":"天猛星 霹雳火","job":"五虎上将","mgr":1,"hirdate":"2018-04-06T05:00:00.000+0000","salary":19000,"comm":1900,"deptNo":20},{"empNo":24,"empName":"呼延灼","nickname":"天威星 双鞭","job":"五虎上将","mgr":1,"hirdate":"2019-04-06T05:00:00.000+0000","salary":22000,"comm":1100,"deptNo":20},{"empNo":25,"empName":"董平","nickname":"天立星·双枪将","job":"五虎上将","mgr":1,"hirdate":"2017-04-06T05:00:00.000+0000","salary":18000,"comm":1200,"deptNo":20},{"empNo":2101,"empName":"花荣","nickname":"天英星 小李广","job":"骑兵头领","mgr":1,"hirdate":"2016-04-06T05:00:00.000+0000","salary":16000,"comm":2000,"deptNo":21},{"em......
+```
 
 
 
 # 二、 Dubbo 配置
+
+`Dubbo`在服务治理过程中，需要对治理的服务进行管理，在操作时主要通过服务注册与发现的手段进行实现，该实现操作主要依赖服务的配置管理，`Dubbo`提供了多种配置的实现，和传统`spring`结合的`Xml配置`方式，对流行的基于`Spring Boot`构建项目更加友好的`注解配置`方式，在`Spring Boot`下编码实现的`API编码配置`方式等。
+
+## 1、 `XML`配置
+
+基于`XML配置`的服务治理，主要区分为`服务提供者`和`服务消费者`，这里可以简单查看两种不同的配置的区别
+
+-   `provider.xml`：服务提供者配置
+-   `consumer.xml`：服务消费者配置
+
+```xml
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="demo-provider"/>
+    <dubbo:registry address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:protocol name="dubbo" port="20890"/>
+    <bean id="demoService" class="org.apache.dubbo.samples.basic.impl.DemoServiceImpl"/>
+    <dubbo:service interface="org.apache.dubbo.samples.basic.api.DemoService" ref="demoService"/>
+</beans>
+```
+
+```xml
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://dubbo.apache.org/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://dubbo.apache.org/schema/dubbo http://dubbo.apache.org/schema/dubbo/dubbo.xsd">
+    <dubbo:application name="demo-consumer"/>
+    <dubbo:registry group="aaa" address="zookeeper://127.0.0.1:2181"/>
+    <dubbo:reference id="demoService" check="false" interface="org.apache.dubbo.samples.basic.api.DemoService"/>
+</beans>
+```
+
+两种配置方案中，都包含了对于应用信息、注册中心的通用配置，同时针对服务提供者有单独的`dubbo:service`配置提供服务，针对消费者包含`dubbo:reference`配置调用远程服务。
+
+### （1） 常规配置
+
+而`dubbo`中提供了多种标签配置，用于支持不同的服务治理场景
+
+| 标签                  | 配置         | 描述                                                         |
+| --------------------- | ------------ | ------------------------------------------------------------ |
+| `<dubbo:service>`     | 服务配置     | 暴露服务                                                     |
+| `<dubbo:reference>`   | 引用配置     | 服务代理                                                     |
+| `<dubbo:protocal>`    | 协议配置     | 配置服务的协议信息，服务提供方配置，消费方使用               |
+| `<dubbo:application>` | 应用配置     | 当前应用信息                                                 |
+| `<dubbo:module>`      | 模块配置     | 配置当前模块信息【可选】                                     |
+| `<dubbo:registry>`    | 注册中心配置 | 配置连接远程注册中心的连接信息                               |
+| `<dubbo:monitory>`    | 监控中心配置 | 配置连接远程监控中心的连接信息                               |
+| `<dubbo:provider>`    | 提供方配置   | 当 ProtocolConfig 和 ServiceConfig 某属性没有配置时<br />采用此缺省值，可选 |
+| `<dubbo:consumer>`    | 消费方配置   | 当 ReferenceConfig 某属性没有配置时，采用此缺省值，可选      |
+| `<dubbo:method>`      | 方法配置     | 用于 ServiceConfig 和 ReferenceConfig 指定方法级的配置信息   |
+| `<dubbo:argument>`    | 参数配置     | 用于指定方法参数配置                                         |
+
+### （2） 配置优先级
+
+配置选项通常会出现在多个环境中，如`全局配置`、`应用配置`、 `提供方`、`消费方`等等，[参考官方手册]以请求超时配置`timeout`为例，在配置查询时会遵循如下查询过程：
+
+-   方法级优先、接口级次之、全局配置再次之
+-   级别相同情况下消费方优先，提供方次之
+
+下图中`图1`和`图2`是方法级配置，消费方优先，提供方次之
+
+下图中`图3`和`图4`是接口级配置，消费方优先，提供方次之
+
+下图中`图5`和`图6`是全局配置，同样消费方优先，提供方次之
+
+<img src="assets/image-20190720221916803.png" style="width: 500px;">
+
+[具体配置选项参考官方手册](http://dubbo.apache.org/zh-cn/docs/user/references/xml/introduction.html)
+
+
+
+## 2、 `注解`配置
+
+`注解`配置是针对`Xml`配置的优化，
+
+
+
+## 3、 `API`配置
+
+
+
+## 4、 `配置中心`动态配置
+
+
+
+## 5、 配置加载流程
+
+
+
+## 6、 常见配置选项
+
+
+
+
 
 
 
